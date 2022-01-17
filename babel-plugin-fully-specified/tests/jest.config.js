@@ -4,7 +4,7 @@ module.exports = {
   snapshotFormat: {
     printBasicPrototype: false,
   },
-  testEnvironment: 'jsdom',
+  rootDir: '../',
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': [
       'babel-jest',
@@ -13,5 +13,4 @@ module.exports = {
       },
     ],
   },
-  transformIgnorePatterns: ['node_modules'],
 }

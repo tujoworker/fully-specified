@@ -23,7 +23,6 @@
   "scripts": {
     "test": "jest tests --config=./tests/jest.config.js",
     "test:watch": "yarn test --watch",
-    "lint": "eslint --ext .js --ignore-path ../.gitignore .",
     "release": "semantic-release",
     "release:dry": "semantic-release --dry-run"
   },

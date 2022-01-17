@@ -1,22 +1,57 @@
-// const { transformFileSync } = require('@babel/core')
-import { transformFileSync } from '@babel/core'
+import { transformFileAsync } from '@babel/core'
 import path from 'path'
+import plugin from '../babel-plugin-fully-specified.js'
 
 describe('js', () => {
   const file = path.resolve(__dirname, './artifacts/module.js')
 
-  let code = null
-  beforeAll(() => {
-    code = transformFileSync(file, {
-      plugins: ['babel-plugin-fully-specified'],
-    }).code
-    console.log('code', code)
+  let code
+
+  beforeAll(async () => {
+    code = (
+      await transformFileAsync(file, {
+        plugins: [plugin],
+      })
+    ).code
+    const res = await transformFileAsync(file, {
+      plugins: [plugin],
+    })
   })
 
-  it('should', () => {
-    expect(code).toMatchInlineSnapshot(`
-"import mod from \\"./modules/foo.js\\";
-import index from \\"./modules/index.js\\";"
-`)
+  it('should match snapshot', () => {
+    expect(code).toBe(
+      `
+
+import mod from "./modules/foo.js";
+import index from "./modules/index.js";
+import styles from './modules/styles.min.css';
+
+`.trim()
+    )
+  })
+})
+
+describe('mjs', () => {
+  const file = path.resolve(__dirname, './artifacts/module.mjs')
+
+  let code
+
+  beforeAll(async () => {
+    code = (
+      await transformFileAsync(file, {
+        plugins: [plugin],
+      })
+    ).code
+  })
+
+  it('should match snapshot', () => {
+    expect(code).toBe(
+      `
+import mod from "./modules/foo.mjs";
+import index from "./modules/index.mjs";
+import styles from './modules/styles.min.css';
+
+`.trim()
+    )
   })
 })
