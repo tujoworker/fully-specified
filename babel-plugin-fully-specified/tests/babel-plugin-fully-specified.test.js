@@ -25,6 +25,7 @@ describe('js', () => {
 import mod from "./modules/foo.js";
 import index from "./modules/index.js";
 import styles from './modules/styles.min.css';
+import ts from './modules/bar.ts';
 
 `.trim()
     )
@@ -50,6 +51,7 @@ describe('mjs', () => {
 import mod from "./modules/foo.mjs";
 import index from "./modules/index.mjs";
 import styles from './modules/styles.min.css';
+import ts from './modules/bar.ts';
 
 `.trim()
     )
@@ -75,6 +77,7 @@ describe('cjs', () => {
 import mod from "./modules/foo.cjs";
 import index from "./modules/index.cjs";
 import styles from './modules/styles.min.css';
+import ts from './modules/bar.ts';
 
 `.trim()
     )
