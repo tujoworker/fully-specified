@@ -1,0 +1,49 @@
+{
+  "name": "babel-plugin-fully-specified",
+  "description": "Babel Plugin to transform your code to include the mandatory file extensions so your output gets fully-specified imports.",
+  "keywords": [
+    "babel",
+    "babel-plugin",
+    "import",
+    "fully-specified",
+    "mandatory file extension"
+  ],
+  "version": "0.0.0-development",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tujoworker/fully-specified.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tujoworker/fully-specified/issues"
+  },
+  "main": "babel-plugin-fully-specified.js",
+  "module": "babel-plugin-fully-specified.js",
+  "license": "MIT",
+  "author": "Tobias Høegh",
+  "scripts": {
+    "test": "jest tests --config=./tests/jest.config.js",
+    "test:watch": "yarn test --watch",
+    "lint": "eslint --ext .js --ignore-path ../.gitignore .",
+    "release": "semantic-release",
+    "release:dry": "semantic-release --dry-run"
+  },
+  "files": [
+    "./babel-plugin-fully-specified.js"
+  ],
+  "peerDependencies": {
+    "@babel/core": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "7.16.7",
+    "@babel/preset-env": "7.16.8",
+    "babel-jest": "27.4.6",
+    "jest": "27.4.7",
+    "semantic-release": "18.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "volta": {
+    "extends": "../package.json"
+  }
+}
