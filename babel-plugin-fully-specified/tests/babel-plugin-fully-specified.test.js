@@ -83,3 +83,35 @@ import ts from './modules/bar.ts';
     )
   })
 })
+
+describe('tsx', () => {
+  const file = path.resolve(__dirname, './artifacts/module.tsx')
+
+  let code
+
+  beforeAll(async () => {
+    code = (
+      await transformFileAsync(file, {
+        presets: [
+          [
+            '@babel/preset-typescript',
+            { isTSX: true, allExtensions: true },
+          ],
+        ],
+        plugins: [plugin],
+      })
+    ).code
+  })
+
+  it('should be transformd to .js', () => {
+    expect(code).toBe(
+      `
+import "./modules/foo.js";
+import "./modules/index.js";
+import './modules/styles.min.css';
+import './modules/bar.ts';
+
+`.trim()
+    )
+  })
+})
