@@ -5,8 +5,8 @@ Babel Plugin to transform your code to include the mandatory file extensions so 
 Example:
 
 ```diff
-- import { Thing } from '/module'
-+ import { Thing } from '/module/index.js'
+- import { Thing } from '/path'
++ import { Thing } from '/path/index.js'
 ```
 
 ## Install
