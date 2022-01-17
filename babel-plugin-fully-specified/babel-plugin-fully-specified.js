@@ -18,6 +18,12 @@ const makeDeclaration = ({
     '.mjs',
     '.cjs',
   ],
+  esExtensions = [
+    // List of extensions that can run in Node.js or in the Browser
+    '.js',
+    '.mjs',
+    '.cjs',
+  ],
 }) => {
   return (
     path,
@@ -50,6 +56,7 @@ const makeDeclaration = ({
       module,
       isDirectory,
       tryExtensions,
+      esExtensions,
     })
     const currentModuleextension = extname(module)
 
@@ -110,6 +117,7 @@ function evaluateTargetModule({
   srcDir,
   srcExt,
   tryExtensions,
+  esExtensions,
 }) {
   if (isDirectory) {
     module = `${module}/index`
@@ -118,7 +126,7 @@ function evaluateTargetModule({
   const targetFile = resolve(srcDir, module)
 
   // 1. try first with same extension
-  if (existsSync(targetFile + srcExt)) {
+  if (esExtensions.includes(srcExt) && existsSync(targetFile + srcExt)) {
     return { module: module + srcExt, extension: srcExt }
   }
 
