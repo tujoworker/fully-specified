@@ -55,3 +55,28 @@ import styles from './modules/styles.min.css';
     )
   })
 })
+
+describe('cjs', () => {
+  const file = path.resolve(__dirname, './artifacts/module.cjs')
+
+  let code
+
+  beforeAll(async () => {
+    code = (
+      await transformFileAsync(file, {
+        plugins: [plugin],
+      })
+    ).code
+  })
+
+  it('should match snapshot', () => {
+    expect(code).toBe(
+      `
+import mod from "./modules/foo.cjs";
+import index from "./modules/index.cjs";
+import styles from './modules/styles.min.css';
+
+`.trim()
+    )
+  })
+})
