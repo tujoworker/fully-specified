@@ -187,7 +187,13 @@ function evaluateTargetModule({
     return false
   }
 
-  if (isDirectory && !existsSync(resolve(srcDir, module + srcExt))) {
+  if (
+    isDirectory &&
+    !(
+      existsSync(resolve(srcDir, module)) &&
+      existsSync(resolve(srcDir, module + esExtensionDefault))
+    )
+  ) {
     module = `${module}/index`
   }
 
