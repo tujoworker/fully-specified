@@ -21,8 +21,9 @@
   "license": "MIT",
   "author": "Tobias Høegh",
   "scripts": {
-    "test": "jest tests --config=./tests/jest.config.js",
+    "test": "jest tests --config=../jest.config.js",
     "test:watch": "yarn test --watch",
+    "prepack": "./build.sh",
     "release": "semantic-release",
     "release:dry": "semantic-release --dry-run"
   },
@@ -33,11 +34,8 @@
     "@babel/core": "*"
   },
   "devDependencies": {
+    "@babel/cli": "7.16.8",
     "@babel/core": "7.16.7",
-    "@babel/preset-env": "7.16.8",
-    "@babel/preset-typescript": "7.16.7",
-    "babel-jest": "27.4.6",
-    "jest": "27.4.7",
     "semantic-release": "18.0.1"
   },
   "publishConfig": {

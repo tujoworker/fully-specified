@@ -4,7 +4,7 @@ module.exports = {
   snapshotFormat: {
     printBasicPrototype: false,
   },
-  rootDir: '../',
+  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': [
       'babel-jest',
