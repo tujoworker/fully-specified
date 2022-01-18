@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, lstatSync } from 'fs'
-import { resolve, extname, dirname, relative } from 'path'
+import { resolve, extname, dirname } from 'path'
 import {
   importDeclaration,
   exportNamedDeclaration,
@@ -35,6 +35,11 @@ type ExportAllDeclarationFunc = (
 
 type PathDeclaration = NodePath & {
   node: ImportDeclaration & ExportNamedDeclaration & ExportAllDeclaration
+}
+
+type PackageData = {
+  hasPath: boolean
+  packagePath: string
 }
 
 interface FullySpecifiedOptions {
@@ -91,13 +96,14 @@ const makeDeclaration = ({
 
     const { value: module } = source
 
-    let packageExtension: string
+    let packageData: PackageData
 
     if (!isLocalFile(module)) {
-      const data = handlePackageModules && getPackageData(module)
-      if (data && data.hasPath) {
-        packageExtension = extname(data.packagePath)
-      } else {
+      if (!handlePackageModules) {
+        return // stop here
+      }
+      packageData = getPackageData(module)
+      if (!(packageData && packageData.hasPath)) {
         return // stop here
       }
     }
@@ -113,7 +119,7 @@ const makeDeclaration = ({
       module,
       filenameDirectory,
       filenameExtension,
-      packageExtension,
+      packageData,
       currentModuleExtension,
       isDirectory,
       tryExtensions,
@@ -171,7 +177,7 @@ export default function FullySpecified(
   }
 }
 
-function getPackageData(module: string) {
+function getPackageData<PackageData>(module: string) {
   try {
     const packagePath = require.resolve(module)
     const parts = packagePath.split('/')
@@ -193,7 +199,7 @@ function getPackageData(module: string) {
     return { hasPath, packagePath }
   } catch (e) {}
 
-  return false
+  return null
 }
 
 function isLocalFile(module: string) {
@@ -210,7 +216,7 @@ function isLocalDirectory(absoluteDirectory: string) {
 function evaluateTargetModule({
   module,
   currentModuleExtension,
-  packageExtension,
+  packageData,
   isDirectory,
   filenameDirectory,
   filenameExtension,
@@ -219,7 +225,14 @@ function evaluateTargetModule({
   esExtensionDefault,
   ensureFileExists,
 }) {
-  if (packageExtension) {
+  if (packageData) {
+    if (
+      packageData.packagePath.endsWith('index.js') &&
+      !module.endsWith('index.js')
+    ) {
+      module = `${module}/index`
+    }
+
     return {
       module: module + esExtensionDefault,
       extension: esExtensionDefault,
