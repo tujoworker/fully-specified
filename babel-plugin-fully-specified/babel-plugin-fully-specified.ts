@@ -187,7 +187,7 @@ function evaluateTargetModule({
     return false
   }
 
-  if (isDirectory) {
+  if (isDirectory && !existsSync(resolve(srcDir, module + srcExt))) {
     module = `${module}/index`
   }
 
