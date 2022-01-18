@@ -17,6 +17,8 @@ It will transform like this:
 + import { Thing } from '/path/index.js'
 ```
 
+**NB:** Dynamic imports are currently not support!
+
 ## Install
 
 ```bash
