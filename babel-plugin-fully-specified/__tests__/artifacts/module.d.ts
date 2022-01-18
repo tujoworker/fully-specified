@@ -1,4 +1,5 @@
-import './modules/foo';
-import './modules';
-import './modules/styles.min.css';
-import './modules/bar.ts';
+import './modules/foo'
+import './modules'
+import './modules/styles.min.css'
+import './modules/bar.ts'
+import('./modules/foo')

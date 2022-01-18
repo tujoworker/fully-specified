@@ -20,10 +20,11 @@ describe('default config', () => {
       expect(code).toBe(
         `
 
-import mod from "./modules/foo.js";
-import index from "./modules/index.js";
-import styles from './modules/styles.min.css';
-import ts from './modules/bar.ts';
+import "./modules/foo.js";
+import "./modules/index.js";
+import './modules/styles.min.css';
+import './modules/bar.ts';
+import('./modules/foo');
 
 `.trim()
       )
@@ -47,10 +48,11 @@ import ts from './modules/bar.ts';
       expect(code).toBe(
         `
 
-import mod from "./modules/foo.mjs";
-import index from "./modules/index.mjs";
-import styles from './modules/styles.min.css';
-import ts from './modules/bar.ts';
+import "./modules/foo.mjs";
+import "./modules/index.mjs";
+import './modules/styles.min.css';
+import './modules/bar.ts';
+import('./modules/foo');
 
 `.trim()
       )
@@ -74,10 +76,11 @@ import ts from './modules/bar.ts';
       expect(code).toBe(
         `
 
-import mod from "./modules/foo.cjs";
-import index from "./modules/index.cjs";
-import styles from './modules/styles.min.css';
-import ts from './modules/bar.ts';
+import "./modules/foo.cjs";
+import "./modules/index.cjs";
+import './modules/styles.min.css';
+import './modules/bar.ts';
+import('./modules/foo');
 
 `.trim()
       )
@@ -111,6 +114,7 @@ import "./modules/foo.js";
 import "./modules/index.js";
 import './modules/styles.min.css';
 import './modules/bar.ts';
+import('./modules/foo');
 
 `.trim()
       )
@@ -136,10 +140,11 @@ describe('ensureFileExists', () => {
       expect(code).toBe(
         `
 
-import mod from "./modules/foo.js";
-import index from "./modules/index.js";
-import styles from './modules/styles.min.css';
-import ts from './modules/bar.ts';
+import "./modules/foo.js";
+import "./modules/index.js";
+import './modules/styles.min.css';
+import './modules/bar.ts';
+import('./modules/foo');
 
 `.trim()
       )
@@ -163,10 +168,11 @@ import ts from './modules/bar.ts';
       expect(code).toBe(
         `
 
-import mod from "./modules/foo.mjs";
-import index from "./modules/index.mjs";
-import styles from './modules/styles.min.css';
-import ts from './modules/bar.ts';
+import "./modules/foo.mjs";
+import "./modules/index.mjs";
+import './modules/styles.min.css';
+import './modules/bar.ts';
+import('./modules/foo');
 
 `.trim()
       )
@@ -189,10 +195,11 @@ import ts from './modules/bar.ts';
     it('should match snapshot', () => {
       expect(code).toBe(
         `
-import mod from "./modules/foo.cjs";
-import index from "./modules/index.cjs";
-import styles from './modules/styles.min.css';
-import ts from './modules/bar.ts';
+import "./modules/foo.cjs";
+import "./modules/index.cjs";
+import './modules/styles.min.css';
+import './modules/bar.ts';
+import('./modules/foo');
 
 `.trim()
       )
@@ -221,11 +228,12 @@ import ts from './modules/bar.ts';
     it('should be transformd to .js', () => {
       expect(code).toBe(
         `
-        
+
 import "./modules/foo.js";
 import "./modules/index.js";
 import './modules/styles.min.css';
 import './modules/bar.ts';
+import('./modules/foo');
 
 `.trim()
       )

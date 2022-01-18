@@ -1,4 +1,5 @@
-import mod from './modules/foo'
-import index from './modules'
-import styles from './modules/styles.min.css'
-import ts from './modules/bar.ts'
+import './modules/foo'
+import './modules'
+import './modules/styles.min.css'
+import './modules/bar.ts'
+import('./modules/foo')
