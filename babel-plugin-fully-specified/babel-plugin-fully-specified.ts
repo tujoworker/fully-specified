@@ -1,5 +1,5 @@
-import { existsSync, lstatSync } from 'fs'
-import { resolve, extname, dirname } from 'path'
+import { existsSync, readFileSync, lstatSync } from 'fs'
+import { resolve, extname, dirname, relative } from 'path'
 import {
   importDeclaration,
   exportNamedDeclaration,
@@ -44,6 +44,7 @@ interface FullySpecifiedOptions {
     | ExportAllDeclarationFunc
   makeNodes: (path: PathDeclaration) => Array<PathDeclaration>
   ensureFileExists: boolean
+  handlePackageModules: boolean
   esExtensionDefault: string
   tryExtensions: Array<string>
   esExtensions: Array<string>
@@ -53,6 +54,7 @@ const makeDeclaration = ({
   declaration,
   makeNodes,
   ensureFileExists = false,
+  handlePackageModules = true,
   esExtensionDefault = '.js',
   tryExtensions = [
     // List of all extensions which we try to find
@@ -89,20 +91,30 @@ const makeDeclaration = ({
 
     const { value: module } = source
 
+    let packageExtension: string
+
     if (!isLocalFile(module)) {
-      return // stop here
+      const data = handlePackageModules && getPackageData(module)
+      if (data && data.hasPath) {
+        packageExtension = extname(data.packagePath)
+      } else {
+        return // stop here
+      }
     }
 
-    const srcDir = dirname(filename)
-    const srcExt = extname(filename)
-    const isDirectory = isLocalDirectory(resolve(srcDir, module))
+    const filenameDirectory = dirname(filename)
+    const filenameExtension = extname(filename)
+    const isDirectory = isLocalDirectory(
+      resolve(filenameDirectory, module)
+    )
 
-    const currentModuleextension = extname(module)
+    const currentModuleExtension = extname(module)
     const targetModule = evaluateTargetModule({
-      srcDir,
-      srcExt,
       module,
-      currentModuleextension,
+      filenameDirectory,
+      filenameExtension,
+      packageExtension,
+      currentModuleExtension,
       isDirectory,
       tryExtensions,
       esExtensions,
@@ -112,7 +124,7 @@ const makeDeclaration = ({
 
     if (
       targetModule === false ||
-      currentModuleextension === targetModule.extension
+      currentModuleExtension === targetModule.extension
     ) {
       return // stop here
     }
@@ -159,50 +171,92 @@ export default function FullySpecified(
   }
 }
 
+function getPackageData(module: string) {
+  try {
+    const packagePath = require.resolve(module)
+    const parts = packagePath.split('/')
+
+    let packageDir: string
+    for (let i = parts.length; i >= 0; i--) {
+      const dir = dirname(parts.slice(0, i).join('/'))
+      if (existsSync(`${dir}/package.json`)) {
+        packageDir = dir
+        break
+      }
+    }
+
+    const packageJson = JSON.parse(
+      readFileSync(`${packageDir}/package.json`).toString()
+    )
+
+    const hasPath = !module.endsWith(packageJson.name)
+    return { hasPath, packagePath }
+  } catch (e) {}
+
+  return false
+}
+
 function isLocalFile(module: string) {
   return module.startsWith('.') || module.startsWith('/')
 }
 
-function isLocalDirectory(absolutesrcDir: string) {
+function isLocalDirectory(absoluteDirectory: string) {
   return (
-    existsSync(absolutesrcDir) && lstatSync(absolutesrcDir).isDirectory()
+    existsSync(absoluteDirectory) &&
+    lstatSync(absoluteDirectory).isDirectory()
   )
 }
 
 function evaluateTargetModule({
   module,
-  currentModuleextension,
+  currentModuleExtension,
+  packageExtension,
   isDirectory,
-  srcDir,
-  srcExt,
+  filenameDirectory,
+  filenameExtension,
   tryExtensions,
   esExtensions,
   esExtensionDefault,
   ensureFileExists,
 }) {
+  if (packageExtension) {
+    return {
+      module: module + esExtensionDefault,
+      extension: esExtensionDefault,
+    }
+  }
+
   if (
-    currentModuleextension &&
-    !esExtensions.includes(currentModuleextension)
+    currentModuleExtension &&
+    !esExtensions.includes(currentModuleExtension)
   ) {
     return false
   }
 
   if (
     isDirectory &&
-    !(
-      existsSync(resolve(srcDir, module)) &&
-      existsSync(resolve(srcDir, module + esExtensionDefault))
+    !existsSync(
+      resolve(
+        filenameDirectory,
+        currentModuleExtension ? module : module + esExtensionDefault
+      )
     )
   ) {
     module = `${module}/index`
   }
 
-  const targetFile = resolve(srcDir, module)
+  const targetFile = resolve(filenameDirectory, module)
 
   if (ensureFileExists) {
     // 1. try first with same extension
-    if (esExtensions.includes(srcExt) && existsSync(targetFile + srcExt)) {
-      return { module: module + srcExt, extension: srcExt }
+    if (
+      esExtensions.includes(filenameExtension) &&
+      existsSync(targetFile + filenameExtension)
+    ) {
+      return {
+        module: module + filenameExtension,
+        extension: filenameExtension,
+      }
     }
 
     // 2. then try with all others
@@ -211,10 +265,10 @@ function evaluateTargetModule({
         return { module: module + extension, extension }
       }
     }
-  } else if (esExtensions.includes(srcExt)) {
+  } else if (esExtensions.includes(filenameExtension)) {
     return {
-      module: module + srcExt,
-      extension: srcExt,
+      module: module + filenameExtension,
+      extension: filenameExtension,
     }
   } else {
     return {

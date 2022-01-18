@@ -1,7 +1,8 @@
 {
   "name": "fully-specified-monorepo",
   "workspaces": [
-    "babel-plugin-fully-specified"
+    "babel-plugin-fully-specified",
+    "./babel-plugin-fully-specified/**/*"
   ],
   "private": true,
   "license": "MIT",
