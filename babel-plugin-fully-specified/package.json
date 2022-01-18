@@ -28,7 +28,8 @@
     "release:dry": "semantic-release --dry-run"
   },
   "files": [
-    "./babel-plugin-fully-specified.js"
+    "./babel-plugin-fully-specified.js",
+    "./babel-plugin-fully-specified.ts"
   ],
   "peerDependencies": {
     "@babel/core": "*"
