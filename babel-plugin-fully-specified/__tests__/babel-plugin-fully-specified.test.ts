@@ -21,7 +21,7 @@ describe('default config', () => {
         `
 
 import '@babel-plugin-fully-specified/test-package';
-import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
 import "./modules/js/foo.js";
 import "./modules/js/index.js";
 import './modules/js/styles.min.css';
@@ -51,7 +51,7 @@ import('./modules/js/foo');
         `
 
 import '@babel-plugin-fully-specified/test-package';
-import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
 import "./modules/mjs/foo.mjs";
 import "./modules/mjs/index.mjs";
 import './modules/mjs/styles.min.css';
@@ -81,7 +81,7 @@ import('./modules/mjs/foo');
         `
 
 import '@babel-plugin-fully-specified/test-package';
-import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
 import "./modules/cjs/foo.cjs";
 import "./modules/cjs/index.cjs";
 import './modules/cjs/styles.min.css';
@@ -117,7 +117,7 @@ import('./modules/cjs/foo');
         `
 
 import '@babel-plugin-fully-specified/test-package';
-import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
 import "./modules/tsx/foo.js";
 import "./modules/tsx/index.js";
 import './modules/tsx/styles.min.css';
@@ -149,7 +149,7 @@ describe('ensureFileExists', () => {
         `
 
 import '@babel-plugin-fully-specified/test-package';
-import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
 import "./modules/js/foo.js";
 import "./modules/js/index.js";
 import './modules/js/styles.min.css';
@@ -179,7 +179,7 @@ import('./modules/js/foo');
         `
 
 import '@babel-plugin-fully-specified/test-package';
-import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
 import "./modules/mjs/foo.mjs";
 import "./modules/mjs/index.mjs";
 import './modules/mjs/styles.min.css';
@@ -209,7 +209,7 @@ import('./modules/mjs/foo');
         `
 
 import '@babel-plugin-fully-specified/test-package';
-import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
 import "./modules/cjs/foo.cjs";
 import "./modules/cjs/index.cjs";
 import './modules/cjs/styles.min.css';
@@ -245,7 +245,7 @@ import('./modules/cjs/foo');
         `
 
 import '@babel-plugin-fully-specified/test-package';
-import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
 import './modules/tsx/foo';
 import './modules/tsx';
 import './modules/tsx/styles.min.css';
