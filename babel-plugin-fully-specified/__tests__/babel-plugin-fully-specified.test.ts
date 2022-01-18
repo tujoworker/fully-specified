@@ -3,7 +3,7 @@ import path from 'path'
 import fullySpecifiedPlugin from '../babel-plugin-fully-specified'
 
 describe('default config', () => {
-  describe('js', () => {
+  describe('.js', () => {
     const file = path.resolve(__dirname, './artifacts/module.js')
 
     let code: string
@@ -16,22 +16,24 @@ describe('default config', () => {
       ).code
     })
 
-    it('should match snapshot', () => {
+    it('should match .js snapshot', () => {
       expect(code).toBe(
         `
 
-import "./modules/foo.js";
-import "./modules/index.js";
-import './modules/styles.min.css';
-import './modules/bar.ts';
-import('./modules/foo');
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "./modules/js/foo.js";
+import "./modules/js/index.js";
+import './modules/js/styles.min.css';
+import './modules/js/bar.ts';
+import('./modules/js/foo');
 
 `.trim()
       )
     })
   })
 
-  describe('mjs', () => {
+  describe('.mjs', () => {
     const file = path.resolve(__dirname, './artifacts/module.mjs')
 
     let code: string
@@ -44,22 +46,24 @@ import('./modules/foo');
       ).code
     })
 
-    it('should match snapshot', () => {
+    it('should match .mjs snapshot', () => {
       expect(code).toBe(
         `
 
-import "./modules/foo.mjs";
-import "./modules/index.mjs";
-import './modules/styles.min.css';
-import './modules/bar.ts';
-import('./modules/foo');
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "./modules/mjs/foo.mjs";
+import "./modules/mjs/index.mjs";
+import './modules/mjs/styles.min.css';
+import './modules/mjs/bar.ts';
+import('./modules/mjs/foo');
 
 `.trim()
       )
     })
   })
 
-  describe('cjs', () => {
+  describe('.cjs', () => {
     const file = path.resolve(__dirname, './artifacts/module.cjs')
 
     let code: string
@@ -72,22 +76,24 @@ import('./modules/foo');
       ).code
     })
 
-    it('should match snapshot', () => {
+    it('should match .cjs snapshot', () => {
       expect(code).toBe(
         `
 
-import "./modules/foo.cjs";
-import "./modules/index.cjs";
-import './modules/styles.min.css';
-import './modules/bar.ts';
-import('./modules/foo');
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "./modules/cjs/foo.cjs";
+import "./modules/cjs/index.cjs";
+import './modules/cjs/styles.min.css';
+import './modules/cjs/bar.ts';
+import('./modules/cjs/foo');
 
 `.trim()
       )
     })
   })
 
-  describe('tsx', () => {
+  describe('.tsx', () => {
     const file = path.resolve(__dirname, './artifacts/module.tsx')
 
     let code: string
@@ -106,15 +112,17 @@ import('./modules/foo');
       ).code
     })
 
-    it('should be transformd to .js', () => {
+    it('should get transformd to .js', () => {
       expect(code).toBe(
         `
 
-import "./modules/foo.js";
-import "./modules/index.js";
-import './modules/styles.min.css';
-import './modules/bar.ts';
-import('./modules/foo');
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "./modules/tsx/foo.js";
+import "./modules/tsx/index.js";
+import './modules/tsx/styles.min.css';
+import './modules/tsx/bar.ts';
+import('./modules/tsx/foo');
 
 `.trim()
       )
@@ -123,7 +131,7 @@ import('./modules/foo');
 })
 
 describe('ensureFileExists', () => {
-  describe('js', () => {
+  describe('.js', () => {
     const file = path.resolve(__dirname, './artifacts/module.js')
 
     let code: string
@@ -136,22 +144,24 @@ describe('ensureFileExists', () => {
       ).code
     })
 
-    it('should match snapshot', () => {
+    it('should match .js snapshot', () => {
       expect(code).toBe(
         `
 
-import "./modules/foo.js";
-import "./modules/index.js";
-import './modules/styles.min.css';
-import './modules/bar.ts';
-import('./modules/foo');
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "./modules/js/foo.js";
+import "./modules/js/index.js";
+import './modules/js/styles.min.css';
+import './modules/js/bar.ts';
+import('./modules/js/foo');
 
 `.trim()
       )
     })
   })
 
-  describe('mjs', () => {
+  describe('.mjs', () => {
     const file = path.resolve(__dirname, './artifacts/module.mjs')
 
     let code: string
@@ -164,22 +174,24 @@ import('./modules/foo');
       ).code
     })
 
-    it('should match snapshot', () => {
+    it('should match .mjs snapshot', () => {
       expect(code).toBe(
         `
 
-import "./modules/foo.mjs";
-import "./modules/index.mjs";
-import './modules/styles.min.css';
-import './modules/bar.ts';
-import('./modules/foo');
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "./modules/mjs/foo.mjs";
+import "./modules/mjs/index.mjs";
+import './modules/mjs/styles.min.css';
+import './modules/mjs/bar.ts';
+import('./modules/mjs/foo');
 
 `.trim()
       )
     })
   })
 
-  describe('cjs', () => {
+  describe('.cjs', () => {
     const file = path.resolve(__dirname, './artifacts/module.cjs')
 
     let code: string
@@ -192,21 +204,24 @@ import('./modules/foo');
       ).code
     })
 
-    it('should match snapshot', () => {
+    it('should match .cjs snapshot', () => {
       expect(code).toBe(
         `
-import "./modules/foo.cjs";
-import "./modules/index.cjs";
-import './modules/styles.min.css';
-import './modules/bar.ts';
-import('./modules/foo');
+
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir.js";
+import "./modules/cjs/foo.cjs";
+import "./modules/cjs/index.cjs";
+import './modules/cjs/styles.min.css';
+import './modules/cjs/bar.ts';
+import('./modules/cjs/foo');
 
 `.trim()
       )
     })
   })
 
-  describe('tsx', () => {
+  describe('.tsx', () => {
     const file = path.resolve(__dirname, './artifacts/module.tsx')
 
     let code: string
@@ -225,15 +240,17 @@ import('./modules/foo');
       ).code
     })
 
-    it('should be transformd to .js', () => {
+    it('should not get transformd to .js', () => {
       expect(code).toBe(
         `
 
-import "./modules/foo.js";
-import "./modules/index.js";
-import './modules/styles.min.css';
-import './modules/bar.ts';
-import('./modules/foo');
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir.js";
+import './modules/tsx/foo';
+import './modules/tsx';
+import './modules/tsx/styles.min.css';
+import './modules/tsx/bar.ts';
+import('./modules/tsx/foo');
 
 `.trim()
       )

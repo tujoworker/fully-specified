@@ -5,6 +5,12 @@ __metadata:
   version: 5
   cacheKey: 8
 
+"@babel-plugin-fully-specified/test-package@workspace:babel-plugin-fully-specified/__tests__/artifacts/test-package":
+  version: 0.0.0-use.local
+  resolution: "@babel-plugin-fully-specified/test-package@workspace:babel-plugin-fully-specified/__tests__/artifacts/test-package"
+  languageName: unknown
+  linkType: soft
+
 "@babel/cli@npm:7.16.8":
   version: 7.16.8
   resolution: "@babel/cli@npm:7.16.8"

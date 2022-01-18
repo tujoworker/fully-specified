@@ -1,0 +1,8 @@
+{
+  "name": "@babel-plugin-fully-specified/test-package",
+  "description": "Test Pacakge",
+  "version": "0.0.1",
+  "main": "index.js",
+  "module": "index.js",
+  "license": "MIT"
+}
