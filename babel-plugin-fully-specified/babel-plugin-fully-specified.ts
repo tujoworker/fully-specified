@@ -53,6 +53,7 @@ interface FullySpecifiedOptions {
   esExtensionDefault: string
   tryExtensions: Array<string>
   esExtensions: Array<string>
+  includePackages: Array<string>
 }
 
 const makeDeclaration = ({
@@ -61,18 +62,15 @@ const makeDeclaration = ({
   ensureFileExists = false,
   handlePackageModules = true,
   esExtensionDefault = '.js',
-  tryExtensions = [
-    // List of all extensions which we try to find
-    '.js',
-    '.mjs',
-    '.cjs',
-  ],
-  esExtensions = [
-    // List of extensions that can run in Node.js or in the Browser
-    '.js',
-    '.mjs',
-    '.cjs',
-  ],
+
+  // List of all extensions which we try to find
+  tryExtensions = ['.js', '.mjs', '.cjs'],
+
+  // List of extensions that can run in Node.js or in the Browser
+  esExtensions = ['.js', '.mjs', '.cjs'],
+
+  // List of packages that also should be transformed with this plugin
+  includePackages = [],
 }: FullySpecifiedOptions) => {
   return (
     path: PathDeclaration,
@@ -94,7 +92,8 @@ const makeDeclaration = ({
       return // stop here
     }
 
-    const { value: module } = source
+    const { value } = source
+    const module = value as string
 
     let packageData: PackageData
 
@@ -102,14 +101,18 @@ const makeDeclaration = ({
       if (!handlePackageModules) {
         return // stop here
       }
-      packageData = getPackageData(module)
+
+      if (includePackages.some((name) => module.startsWith(name))) {
+        packageData = getPackageData(module)
+      }
+
       if (!(packageData && packageData.hasPath)) {
         return // stop here
       }
     }
 
-    const filenameDirectory = dirname(filename)
     const filenameExtension = extname(filename)
+    const filenameDirectory = dirname(filename)
     const isDirectory = isLocalDirectory(
       resolve(filenameDirectory, module)
     )
