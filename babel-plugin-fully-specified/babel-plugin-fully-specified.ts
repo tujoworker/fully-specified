@@ -49,7 +49,6 @@ interface FullySpecifiedOptions {
     | ExportAllDeclarationFunc
   makeNodes: (path: PathDeclaration) => Array<PathDeclaration>
   ensureFileExists: boolean
-  handlePackageModules: boolean
   esExtensionDefault: string
   tryExtensions: Array<string>
   esExtensions: Array<string>
@@ -60,7 +59,6 @@ const makeDeclaration = ({
   declaration,
   makeNodes,
   ensureFileExists = false,
-  handlePackageModules = true,
   esExtensionDefault = '.js',
 
   // List of all extensions which we try to find
@@ -98,10 +96,6 @@ const makeDeclaration = ({
     let packageData: PackageData
 
     if (!isLocalFile(module)) {
-      if (!handlePackageModules) {
-        return // stop here
-      }
-
       if (includePackages.some((name) => module.startsWith(name))) {
         packageData = getPackageData(module)
       }
