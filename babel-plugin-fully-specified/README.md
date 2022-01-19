@@ -39,7 +39,25 @@ yarn add babel-plugin-fully-specified
 
 ## Plugin Options
 
-As of now, no options are available.
+```js
+{
+  plugins: [
+    ['babel-plugin-fully-specified', {
+        ensureFileExists = false,
+        esExtensionDefault = '.js',
+
+        // List of all extensions which we try to find
+        tryExtensions = ['.js', '.mjs', '.cjs'],
+
+        // List of extensions that can run in Node.js or in the Browser
+        esExtensions = ['.js', '.mjs', '.cjs'],
+
+        // List of packages that also should be transformed with this plugin
+        includePackages = [],
+    }]
+  ]
+}
+```
 
 ## More details
 
