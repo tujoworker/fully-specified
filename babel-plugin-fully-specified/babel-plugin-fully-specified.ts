@@ -243,16 +243,34 @@ function evaluateTargetModule({
     return false
   }
 
-  if (
-    isDirectory &&
-    !existsSync(
-      resolve(
-        filenameDirectory,
-        currentModuleExtension ? module : module + esExtensionDefault
+  if (isDirectory) {
+    const resolvedModulePath = resolve(filenameDirectory, module)
+    const fileExtensionsToCheck = [
+      ...tryExtensions,
+      '.ts',
+      '.tsx',
+      '.jsx',
+      '.mts',
+      '.cts',
+    ]
+    const hasFileMatch =
+      (currentModuleExtension && existsSync(resolvedModulePath)) ||
+      (!currentModuleExtension &&
+        [...fileExtensionsToCheck].some((extension) =>
+          existsSync(resolvedModulePath + extension)
+        ))
+
+    if (
+      !hasFileMatch &&
+      !existsSync(
+        resolve(
+          filenameDirectory,
+          currentModuleExtension ? module : module + esExtensionDefault
+        )
       )
-    )
-  ) {
-    module = `${module}/index`
+    ) {
+      module = `${module}/index`
+    }
   }
 
   const targetFile = resolve(filenameDirectory, module)
