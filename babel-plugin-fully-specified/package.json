@@ -35,8 +35,8 @@
     "@babel/core": "*"
   },
   "devDependencies": {
-    "@babel/cli": "7.16.8",
-    "@babel/core": "7.16.7",
+    "@babel/cli": "7.28.6",
+    "@babel/core": "7.28.6",
     "semantic-release": "18.0.1"
   },
   "publishConfig": {
