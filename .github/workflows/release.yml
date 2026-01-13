@@ -1,11 +1,8 @@
 name: NPM
 
 on:
-  workflow_run:
-    workflows: ['Jest', 'Cypress']
-    branches: [main, beta]
-    types:
-      - completed
+  push:
+    branches: [main]
 
 jobs:
   release:
