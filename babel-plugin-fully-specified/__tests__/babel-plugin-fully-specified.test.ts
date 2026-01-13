@@ -156,6 +156,49 @@ export { foo } from "./modules/cjs/foo.cjs";
     })
   })
 
+  describe('.ts', () => {
+    const file = path.resolve(__dirname, './artifacts/module.ts')
+
+    let code: string
+
+    beforeAll(async () => {
+      code = (
+        await transformFileAsync(file, {
+          presets: [['@babel/preset-typescript', { allExtensions: true }]],
+          plugins: [
+            [
+              fullySpecifiedPlugin,
+              {
+                includePackages: ['@babel-plugin-fully-specified'],
+              },
+            ],
+          ],
+        })
+      ).code
+    })
+
+    it('should avoid forcing /index when a .ts file exists', () => {
+      expect(code).toBe(
+        `
+
+import '@babel-plugin-fully-specified/test-package';
+import "@babel-plugin-fully-specified/test-package/subdir/index.js";
+import "./modules/ts/foo.js";
+import "./modules/ts/hybrid.js";
+import "./modules/ts/index.js";
+import './modules/ts/styles.min.css';
+import './modules/ts/bar.ts';
+import('./modules/ts/foo');
+export * from "./modules/ts/foo.js";
+export * from "./modules/ts/hybrid.js";
+export * as name from "./modules/ts/index.js";
+export { foo } from "./modules/ts/foo.js";
+
+`.trim()
+      )
+    })
+  })
+
   describe('.tsx', () => {
     const file = path.resolve(__dirname, './artifacts/module.tsx')
 
